@@ -2,10 +2,13 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xmlns:context="http://www.springframework.org/schema/context"
+        xmlns:mvc="http://www.springframework.org/schema/mvc"
         xsi:schemaLocation="http://www.springframework.org/schema/beans
                   http://www.springframework.org/schema/beans/spring-beans-4.3.xsd
                   http://www.springframework.org/schema/context
-                  http://www.springframework.org/schema/context/spring-context.xsd">
+                  http://www.springframework.org/schema/context/spring-context.xsd
+                  http://www.springframework.org/schema/mvc 
+     			  http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd">
 
 	<context:component-scan base-package="controller"></context:component-scan>
 	
@@ -14,5 +17,23 @@
 		<property name="suffix" value=".jsp"></property>
 	</bean>
 
+	<!-- 在springmvc中增加上传文件的功能 -->
+	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<!-- 最大上传文件的大小10m -->
+		<property name="maxUploadSize">
+			<value>10485760</value>
+		</property>
+	</bean>
+	
+	
+	<!-- 拦截器的配置 -->
+	<mvc:interceptors>
+		<mvc:interceptor>
+			<!-- 具体拦截某个路径下的请求 -->
+			<mvc:mapping path="/index"/>
+			<!-- 使用哪个拦截器对请求进行拦截 -->
+			<bean class="interceptor.IndexInterceptor"></bean>
+		</mvc:interceptor>
+	</mvc:interceptors>
 	
 </beans>

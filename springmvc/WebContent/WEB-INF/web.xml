@@ -3,6 +3,7 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee
 http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd">
+	
 	<servlet>
 		<servlet-name>springmvc</servlet-name>
 		<servlet-class>
@@ -12,6 +13,22 @@ http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd">
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>springmvc</servlet-name>
+		<!-- 必须要使用这个默认拦截符？？使用其他的运行不了 -->
 		<url-pattern>/</url-pattern>
 	</servlet-mapping>
+	
+	<!-- 编码问题的配置，使用拦截器来设置编码 -->
+	<filter>
+		<filter-name>setCharacterCode</filter-name>
+		<filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
+		<init-param>
+			<param-name>encoding</param-name>
+			<param-value>utf-8</param-value>
+		</init-param>
+	</filter>
+	<filter-mapping>
+		<filter-name>setCharacterCode</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+	
 </web-app>

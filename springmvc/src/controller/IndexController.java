@@ -2,6 +2,7 @@ package controller;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
@@ -23,6 +24,32 @@ public class IndexController {
 		return mav;//最后返回了一个ModelAndView对象
 	}
 	
+	//页面跳转
+	@RequestMapping(value="/jump")
+	public ModelAndView jump(){
+		ModelAndView mv = new ModelAndView("redirect:/index");
+		return mv;
+	}
 	
+	@RequestMapping(value="/check")
+	public ModelAndView check(HttpSession session){
+		//得到session的次数，如果在session中没有找到关键字，则返回null
+		Integer i = (Integer) session.getAttribute("count");
+		//首次访问时得到的会话次数是null
+		if (i==null) {
+			i=0;
+		}
+		i++;
+		session.setAttribute("count", i);
+		ModelAndView mv = new ModelAndView("check");
+		return mv;
+	}
+	//清除session会话中的次数
+	@RequestMapping(value="/clear")
+	public ModelAndView clear(HttpSession session){
+		session.setAttribute("count", -1);
+		ModelAndView mv = new ModelAndView("redirect:/check");
+		return mv;
+	}
 	
 }
