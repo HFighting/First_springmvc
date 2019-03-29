@@ -13,7 +13,7 @@
 	<context:component-scan base-package="controller"></context:component-scan>
 	
 	<bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-		<property name="prefix" value="/WEB-INF/page/"></property>
+		<property name="prefix" value="/WEB-INF/showpage/"></property>
 		<property name="suffix" value=".jsp"></property>
 	</bean>
 
@@ -26,13 +26,18 @@
 	</bean>
 	
 	
-	<!-- 拦截器的配置 -->
+	<!-- springmvc中拦截器的配置 -->
 	<mvc:interceptors>
 		<mvc:interceptor>
-			<!-- 具体拦截某个路径下的请求 -->
-			<mvc:mapping path="/index"/>
+			<!-- 具体拦截某个路径下的请求，可以配置多个页面 -->
+			<!-- WEB-INF下的资源是不可访问的，只能通过跳转访问 -->
+			<mvc:mapping path="/**"/>
 			<!-- 使用哪个拦截器对请求进行拦截 -->
-			<bean class="interceptor.IndexInterceptor"></bean>
+			<bean class="interceptor.IndexInterceptor">
+				<property name="openTime" value="11"></property>
+				<property name="closeTime" value="21"></property>
+				<property name="outredirectorPage" value="/springmvc/showpage/HomePage.jsp"></property>
+			</bean>
 		</mvc:interceptor>
 	</mvc:interceptors>
 	

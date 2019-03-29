@@ -13,7 +13,7 @@ http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd">
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>springmvc</servlet-name>
-		<!-- 必须要使用这个默认拦截符？？使用其他的运行不了 -->
+		<!-- 必须要使用这个默认拦截符,这个会对所有的请求进行拦截？？使用其他的运行不了 -->
 		<url-pattern>/</url-pattern>
 	</servlet-mapping>
 	
